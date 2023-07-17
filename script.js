@@ -1,13 +1,24 @@
-//your JS code here. If required.
 const axios = require('axios');
+const { expect } = require('chai');
 
-async function makeRequest() {
-  try {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
+describe('HTTP Request', () => {
+  let responseData;
 
-makeRequest();
+  beforeEach(async () => {
+    try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+      responseData = response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  it('should log the response body to the console', () => {
+    console.log(responseData);
+    // Add your validation assertions here
+    expect(responseData).to.have.property('userId');
+    expect(responseData).to.have.property('id');
+    expect(responseData).to.have.property('title');
+    expect(responseData).to.have.property('completed');
+  });
+});
